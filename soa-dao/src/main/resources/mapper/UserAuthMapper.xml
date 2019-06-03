@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.server.soa.dao.mysql.mapper.UserAuthMapper">
+  <resultMap id="BaseResultMap" type="com.example.server.soa.dao.mysql.domain.UserAuth">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="identity_type" jdbcType="VARCHAR" property="identityType" />
+    <result column="identifier" jdbcType="VARCHAR" property="identifier" />
+    <result column="credential" jdbcType="BIT" property="credential" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, identity_type, identifier, credential, gmt_create, gmt_modified
+  </sql>
+  <insert id="insert" parameterType="com.example.server.soa.dao.mysql.domain.UserAuth">
+    insert into user_auth
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="identityType != null">
+        identity_type,
+      </if>
+      <if test="identifier != null">
+        identifier,
+      </if>
+      <if test="credential != null">
+        credential,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="identityType != null">
+        #{identityType,jdbcType=VARCHAR},
+      </if>
+      <if test="identifier != null">
+        #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="credential != null">
+        #{credential,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_auth
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <update id="updateById" parameterType="com.example.server.soa.dao.mysql.domain.UserAuth">
+    update user_auth
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="identityType != null">
+        identity_type = #{identityType,jdbcType=VARCHAR},
+      </if>
+      <if test="identifier != null">
+        identifier = #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="credential != null">
+        credential = #{credential,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from user_auth
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+</mapper>
